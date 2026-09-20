@@ -1,0 +1,908 @@
+/* ==========================================================================
+   AHMAD WIRAD - PORTFOLIO STYLESHEET
+   ==========================================================================
+   
+   TABLE OF CONTENTS:
+   --------------------------------------------------------------------------
+   01. DESIGN TOKENS & COLOR THEME      --> [WHERE TO CHANGE: Theme colors/fonts]
+   02. GLOBAL RESET & BASE STYLES       --> Body, smooth scroll, base typography
+   03. BACKGROUND DESIGNS & EFFECTS     --> [WHERE TO ADD / EDIT: Background glows & grids]
+   04. NAVIGATION BAR                   --> Glassmorphism navbar & links
+   05. HERO SECTION                     --> Full-height hero, text, sticky scroll frame
+   06. BUTTONS & UI CONTROLS            --> Primary & secondary CTA buttons
+   07. SECTION LABELS & COMMON HEADINGS --> Reusable section title styles
+   08. ABOUT SECTION                    --> Image frame & biography grid
+   09. SKILLS SECTION & 3D CARDS        --> [WHERE TO EDIT: 3D hover tilt & pop-out]
+   10. PROJECTS & EXPERIENCE SECTIONS   --> 3D cards, numbers, tags
+   11. CONTACT SECTION                  --> Social links & contact badges
+   12. FOOTER                           --> Bottom navigation & copyright
+   13. NEW / CUSTOM COMPONENTS AREA     --> [WHERE TO ADD: New UI components here]
+   14. RESPONSIVE DESIGN & MOBILE MENU  --> Media queries (900px, 600px) & touch fallbacks
+   ========================================================================== */
+
+
+/* ==========================================================================
+   01. DESIGN TOKENS & COLOR THEME
+   
+   [WHERE TO CHANGE]: 
+   Change these hex values to customize the color scheme across the entire website.
+   ========================================================================== */
+
+:root {
+
+    /* Primary dark backgrounds */
+    --background: #101915;
+    --background-light: #101511;
+
+    /* Card surfaces */
+    --card: #222922;
+    --card-hover: #3D4633;
+
+    /* Brand accents (Olive & Muted Sage) */
+    --accent: #3D4633;
+    --accent-light: #717476;
+
+    /* Text typography colors */
+    --text: #f1f2ef;
+    --muted: #717476;
+
+    /* Border & subtle divider lines */
+    --border: rgba(113, 116, 118, 0.35);
+}
+
+
+/* ==========================================================================
+   02. GLOBAL RESET & BASE STYLES
+   ========================================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Centered content wrapper */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+
+/* ==========================================================================
+   03. BACKGROUND DESIGNS & AMBIENT EFFECTS
+   
+   [WHERE TO CHANGE / ADD]: 
+   Use this section to add or adjust decorative background designs such as
+   ambient radial glows, subtle dot grids, or mesh gradients.
+   ========================================================================== */
+
+/* Example: Ambient background glow utility classes (optional to use on any section) */
+.bg-ambient-glow {
+    position: relative;
+    overflow: hidden;
+}
+
+.bg-ambient-glow::before {
+    content: "";
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(113, 116, 118, 0.12) 0%, transparent 70%);
+    top: -200px;
+    right: -200px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* [ADD YOUR BACKGROUND DESIGNS HERE]:
+   You can add dot grids, animated gradient meshes, or canvas layers below.
+   Example:
+   .bg-grid-pattern {
+       background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+       background-size: 24px 24px;
+   }
+*/
+
+
+/* ==========================================================================
+   04. NAVIGATION BAR
+   ========================================================================== */
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(26, 44, 36, 0.062);
+    backdrop-filter: blur(80px);
+    -webkit-backdrop-filter: blur(80px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.nav-container {
+    width: 90%;
+    max-width: 1300px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+    font-size: 20px;
+    font-weight: 800;
+    text-decoration: none;
+    color: white;
+}
+
+.logo span {
+    color: var(--accent-light);
+}
+
+/* Navigation links */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    list-style: none;
+}
+
+.nav-links a {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 13px;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--accent-light);
+}
+
+/* Navigation CTA button */
+.nav-button {
+    background: linear-gradient(
+        90deg,
+        var(--accent),
+        var(--accent-light)
+    );
+    color: #101915 !important;
+    padding: 10px 18px;
+    border-radius: 25px;
+    font-weight: 600;
+    box-shadow: 0 0 20px rgba(113, 116, 118, 0.25);
+}
+
+
+/* ==========================================================================
+   05. HERO SECTION
+   ========================================================================== */
+
+/* Creates scrolling height while the hero remains sticky */
+.hero-scroll-area {
+    height: 200vh;
+    position: relative;
+}
+
+.hero {
+    position: sticky;
+    top: 0;
+    height: 130vh;
+    overflow: hidden;
+    background: var(--background);
+}
+
+/* Hero crossfade photos */
+.hero-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: opacity 0.05s linear;
+}
+
+#photo1 {
+    opacity: 1;
+    z-index: 1;
+}
+
+#photo2 {
+    opacity: 0;
+    z-index: 2;
+}
+
+/* Dark gradient overlay across the hero photo */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    background: linear-gradient(
+        90deg,
+        rgba(16, 25, 21, 0.96) 0%,
+        rgba(16, 25, 21, 0.78) 35%,
+        rgba(16, 25, 21, 0.25) 75%,
+        rgba(16, 25, 21, 0.45) 100%
+    );
+}
+
+/* Bottom fade to seamlessly blend hero with the next section */
+.hero::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 250px;
+    z-index: 4;
+    background: linear-gradient(
+        transparent,
+        var(--background)
+    );
+    pointer-events: none;
+}
+
+/* Hero text content */
+.hero-content {
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    left: 7%;
+    transform: translateY(-50%);
+    width: 560px;
+}
+
+.eyebrow {
+    color: var(--accent-light);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.hero h1 {
+    font-size: clamp(45px, 5vw, 75px);
+    line-height: 1.02;
+    font-weight: 800;
+    margin-bottom: 25px;
+}
+
+.gradient-text {
+    background: linear-gradient(
+        90deg,
+        #717476,
+        #f1f2ef
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero-description {
+    color: #cbd5e1;
+    font-size: 17px;
+    max-width: 540px;
+    margin-bottom: 30px;
+}
+
+/* Hero buttons container */
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+/* Hero tags container */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tag {
+    padding: 6px 13px;
+    border-radius: 20px;
+    border: 1px solid #3D4633;
+    background: #222922;
+    color: #717476;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* Vertical scroll indicator */
+.scroll-indicator {
+    position: absolute;
+    z-index: 20;
+    right: 5%;
+    bottom: 70px;
+    writing-mode: vertical-rl;
+    color: #94a3b8;
+    font-size: 10px;
+    letter-spacing: 4px;
+}
+
+
+/* ==========================================================================
+   06. BUTTONS & UI CONTROLS
+   ========================================================================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 22px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.btn-primary {
+    color: #101915;
+    background: #717476;
+    box-shadow: 0 0 25px rgba(113, 116, 118, 0.15);
+}
+
+.btn-primary:hover {
+    background: #f1f2ef;
+    transform: translateY(-3px);
+    box-shadow: 0 0 30px rgba(113, 116, 118, 0.25);
+}
+
+.btn-secondary {
+    color: #f1f2ef;
+    border: 1px solid #3D4633;
+    background: rgba(16, 21, 17, 0.5);
+}
+
+.btn-secondary:hover {
+    border-color: #717476;
+    color: #717476;
+}
+
+
+/* ==========================================================================
+   07. SECTION LABELS & COMMON HEADINGS
+   ========================================================================== */
+
+section {
+    padding: 110px 0;
+}
+
+.section-label {
+    color: #717476;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.section-title {
+    font-size: 42px;
+    line-height: 1.1;
+    margin-bottom: 40px;
+}
+
+
+/* ==========================================================================
+   08. ABOUT SECTION
+   ========================================================================== */
+
+.about {
+    background: var(--background);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 70px;
+    align-items: center;
+}
+
+.about-image {
+    width: 100%;
+    max-width: 480px;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-shadow: 0 0 50px rgba(113, 116, 118, 0.08);
+}
+
+.about-text p {
+    color: var(--muted);
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+
+/* ==========================================================================
+   09. SKILLS SECTION & 3D CARDS (Cornerstone-04 3D Hover)
+   
+   [WHERE TO CHANGE 3D HOVER]:
+   - perspective: Controls the 3D viewing distance (e.g. 800px - 1200px).
+   - rotateX / rotateY: Controls tilt angle on hover (e.g. 16deg).
+   - translateZ: Controls the pop-out height of inner elements (40px - 50px).
+   ========================================================================== */
+
+.skills-section {
+    background: var(--background-light);
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    perspective: 1000px; /* 3D depth perspective */
+}
+
+.skill-card {
+    padding: 30px;
+    min-height: 220px;
+    background: #222922;
+    border: 1px solid #3D4633;
+    border-radius: 10px;
+    position: relative;
+    transform-style: preserve-3d; /* Enables 3D layering for children */
+    will-change: transform;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+                background 0.35s,
+                border-color 0.35s,
+                box-shadow 0.35s;
+}
+
+/* Card 3D tilt on hover */
+.skill-card:hover {
+    transform: translateZ(10px) rotateX(16deg) rotateY(16deg);
+    background: #3D4633;
+    border-color: #717476;
+    box-shadow: -15px 20px 40px rgba(0, 0, 0, 0.35),
+                0 0 25px rgba(113, 116, 118, 0.15);
+}
+
+/* Skill Icon */
+.skill-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #3D4633;
+    border: 1px solid #717476;
+    color: #f1f2ef;
+    font-size: 22px;
+    margin-bottom: 20px;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Icon pops forward in 3D */
+.skill-card:hover .skill-icon {
+    transform: translateZ(45px);
+}
+
+.skill-card h3 {
+    font-size: 17px;
+    margin-bottom: 12px;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Heading pops forward in 3D */
+.skill-card:hover h3 {
+    transform: translateZ(40px);
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.skill-card ul {
+    padding-left: 18px;
+    color: var(--muted);
+    font-size: 13px;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* List pops forward in 3D */
+.skill-card:hover ul {
+    transform: translateZ(25px);
+}
+
+.skill-card li {
+    margin-bottom: 6px;
+}
+
+
+/* ==========================================================================
+   10. PROJECTS & EXPERIENCE SECTIONS (Cornerstone-04 3D Hover)
+   ========================================================================== */
+
+.projects {
+    background: var(--background-light);
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    perspective: 1000px; /* 3D depth perspective */
+}
+
+.project-card {
+    min-height: 330px;
+    padding: 30px;
+    border-radius: 12px;
+    background: #222922;
+    border: 1px solid #3D4633;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transform-style: preserve-3d; /* Enables 3D layering for children */
+    will-change: transform;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+                background 0.35s,
+                border-color 0.35s,
+                box-shadow 0.35s;
+}
+
+/* Project Card 3D tilt on hover */
+.project-card:hover {
+    transform: translateZ(10px) rotateX(16deg) rotateY(16deg);
+    background: #3D4633;
+    border-color: #717476;
+    box-shadow: -15px 20px 40px rgba(0, 0, 0, 0.35),
+                0 0 25px rgba(113, 116, 118, 0.15);
+}
+
+.project-number {
+    color: #717476;
+    font-size: 12px;
+    margin-bottom: 25px;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Number floats forward */
+.project-card:hover .project-number {
+    transform: translateZ(35px);
+}
+
+.project-card h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Heading floats forward in 3D with depth shadow */
+.project-card:hover h3 {
+    transform: translateZ(50px);
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.project-card p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 25px;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Paragraph floats forward */
+.project-card:hover p {
+    transform: translateZ(25px);
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: auto;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Tag pills float forward */
+.project-card:hover .project-tags {
+    transform: translateZ(35px);
+}
+
+.project-tag {
+    padding: 5px 9px;
+    border-radius: 15px;
+    background: #3D4633;
+    color: #f1f2ef;
+    font-size: 10px;
+}
+
+
+/* ==========================================================================
+   11. CONTACT SECTION
+   ========================================================================== */
+
+.contact {
+    position: relative;
+    overflow: hidden;
+    background: var(--background);
+}
+
+/* Ambient glow orb behind contact */
+.contact::before {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: rgba(113, 116, 118, 0.08);
+    filter: blur(80px);
+    right: -150px;
+    top: -200px;
+}
+
+.contact-content {
+    position: relative;
+    z-index: 2;
+}
+
+.contact h2 {
+    font-size: clamp(40px, 5vw, 65px);
+    line-height: 1.05;
+    max-width: 700px;
+    margin-bottom: 20px;
+}
+
+.contact p {
+    color: var(--muted);
+    max-width: 650px;
+    margin-bottom: 40px;
+}
+
+.contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 35px;
+}
+
+.contact-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: white;
+}
+
+.contact-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #3D4633;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f1f2ef;
+    font-weight: 700;
+}
+
+.contact-link small {
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+}
+
+
+/* ==========================================================================
+   12. FOOTER
+   ========================================================================== */
+
+footer {
+    padding: 30px 0;
+    background: var(--background-light);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-logo {
+    font-weight: 800;
+}
+
+.footer-logo span {
+    color: var(--accent-light);
+}
+
+.copyright {
+    color: #64748b;
+    font-size: 12px;
+}
+
+
+/* ==========================================================================
+   13. NEW / CUSTOM COMPONENTS AREA
+   
+   [WHERE TO ADD NEW COMPONENTS]:
+   Add any new components here (e.g. badges, testimonials, modals, stats counter).
+   Example starter templates are provided below.
+   ========================================================================== */
+
+/* Example 1: Stat Counter Component */
+.stat-box {
+    padding: 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--accent-light);
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* Example 2: Pill Badge Component */
+.badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(113, 116, 118, 0.15);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+/* [PASTE ADDITIONAL NEW COMPONENT STYLES BELOW THIS LINE] */
+
+
+/* ==========================================================================
+   14. RESPONSIVE DESIGN & MOBILE MENU
+   ========================================================================== */
+
+.mobile-menu {
+    display: none;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+@media (max-width: 900px) {
+    .nav-links {
+        display: none;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+
+    .hero-content {
+        left: 6%;
+        right: 6%;
+        width: auto;
+    }
+
+    .hero h1 {
+        font-size: 50px;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .about-image {
+        height: 450px;
+        max-width: 100%;
+    }
+
+    .skills-grid,
+    .projects-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    section {
+        padding: 80px 0;
+    }
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .hero-description {
+        font-size: 15px;
+    }
+
+    .hero::before {
+        background: linear-gradient(
+            90deg,
+            rgba(16, 25, 21, 0.94),
+            rgba(16, 25, 21, 0.55)
+        );
+    }
+
+    .skills-grid,
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-title {
+        font-size: 34px;
+    }
+
+    .contact-links {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .scroll-indicator {
+        display: none;
+    }
+}
+
+/* 3D Card Hover fallbacks for touch devices and reduced motion */
+@media (hover: none) {
+    .skill-card:hover,
+    .project-card:hover {
+        transform: none;
+    }
+
+    .skill-card:hover .skill-icon,
+    .skill-card:hover h3,
+    .skill-card:hover ul,
+    .project-card:hover .project-number,
+    .project-card:hover h3,
+    .project-card:hover p,
+    .project-card:hover .project-tags {
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .skill-card,
+    .project-card,
+    .skill-card:hover,
+    .project-card:hover,
+    .skill-card *,
+    .project-card * {
+        transform: none !important;
+        transition: none !important;
+    }
+}
+
